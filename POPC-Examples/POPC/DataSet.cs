@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ContinuousPOPC
 {
@@ -7,45 +6,114 @@ namespace ContinuousPOPC
     {
         public List<DataRow> rows;
 
-        public DataSet(int numExpectedClusters, int numFeatures, int samplesPerCluser)
+        public DataSet(int numExpectedClusters, int numFeatures, int samples, int example)
         {
-            Random r = new Random();
             rows = new List<DataRow>();
 
-            for (int i = 0; i < numExpectedClusters; i++)
+            switch (example)
             {
-                double[] probs = new double[numFeatures];
-                for (int k = 0; k < numFeatures; k++)
-                {
-                    if (k < numExpectedClusters)
+                case 1:
                     {
-                        if (k == i)
+                        int[] featureBelongsToCluster = new int[numFeatures];
+                        for (int i = 0; i < numFeatures; i++)
                         {
-                            probs[k] = 1.0;
+                            featureBelongsToCluster[i] = Program.r.Next(numExpectedClusters);
                         }
-                        else
+                        for (int j = 0; j < samples; j++)
                         {
-                            probs[k] = 0.0;
+                            int clusterNum = Program.r.Next(numExpectedClusters);
+                            DataRow dr = new DataRow();
+                            dr.features = new bool[numFeatures];
+                            for (int i = 0; i < numFeatures; i++)
+                            {
+                                if (clusterNum == featureBelongsToCluster[i])
+                                {
+                                    dr.features[i] = true;
+                                }
+                            }
+                            rows.Add(dr);
                         }
+                        break;
                     }
-                    else
+                case 2:
                     {
-                        probs[k] = 0.5;
+                        int[] featureBelongsToCluster = new int[numFeatures];
+                        for (int i = 0; i < numFeatures; i++)
+                        {
+                            if (i < 0.9 * numFeatures)
+                            {
+                                featureBelongsToCluster[i] = Program.r.Next(numExpectedClusters);
+                            }
+                            else
+                            {
+                                // does not belong to anyone
+                                featureBelongsToCluster[i] = -1;
+                            }
+                        }
+                        for (int j = 0; j < samples; j++)
+                        {
+                            int clusterNum = Program.r.Next(numExpectedClusters);
+                            DataRow dr = new DataRow();
+                            dr.features = new bool[numFeatures];
+                            for (int i = 0; i < numFeatures; i++)
+                            {
+                                if (clusterNum == featureBelongsToCluster[i])
+                                {
+                                    dr.features[i] = true;
+                                }
+                                if (featureBelongsToCluster[i] == -1)
+                                {
+                                    if (Program.r.NextDouble() < 0.2)
+                                    {
+                                        dr.features[i] = true;
+                                    }
+                                }
+                            }
+                            rows.Add(dr);
+                        }
+                        break;
                     }
-                }
-
-                for (int j = 0; j < samplesPerCluser; j++)
-                {
-                    bool[] feats = new bool[numFeatures];
-
-                    for (int k = 0; k < numFeatures; k++)
+                case 3:
                     {
-                        feats[k] = r.NextDouble() < probs[k];
+                        for (int i = 0; i < numExpectedClusters; i++)
+                        {
+                            double[] probs = new double[numFeatures];
+                            for (int k = 0; k < numFeatures; k++)
+                            {
+                                if (k < numExpectedClusters)
+                                {
+                                    if (k == i)
+                                    {
+                                        probs[k] = 1.0;
+                                    }
+                                    else
+                                    {
+                                        probs[k] = 0.0;
+                                    }
+                                }
+                                else
+                                {
+                                    probs[k] = 0.5;
+                                }
+                            }
+
+                            for (int j = 0; j < samples; j++)
+                            {
+                                bool[] feats = new bool[numFeatures];
+
+                                for (int k = 0; k < numFeatures; k++)
+                                {
+                                    feats[k] = Program.r.NextDouble() < probs[k];
+                                }
+                                DataRow dr = new DataRow();
+                                dr.features = feats;
+                                rows.Add(dr);
+                            }
+                        }
+                        break;
                     }
-                    DataRow dr = new DataRow();
-                    dr.features = feats;
-                    rows.Add(dr);
-                }
+                default:
+                    break;
             }
         }
     }

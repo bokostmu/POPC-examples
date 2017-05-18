@@ -9,7 +9,37 @@ namespace ContinuousPOPC
 
         static void Main(string[] args)
         {
+            RunExample1();
+            RunExample2();
             RunExample3();
+        }
+
+        private static void RunExample1()
+        {
+            int numExpctedClusters = 7;
+            int numFeatures = 100;
+            int samples = 200;
+            DataSet dataSet = new DataSet(numExpctedClusters, numFeatures, samples, 1);
+            popc pop = new popc(dataSet);
+
+            if(pop.clusters.Count != numExpctedClusters)
+            {
+                throw new Exception("theory not confirmed");
+            }
+        }
+
+        private static void RunExample2()
+        {
+            int numExpctedClusters = 7;
+            int numFeatures = 100;
+            int samples = 200;
+            DataSet dataSet = new DataSet(numExpctedClusters, numFeatures, samples, 2);
+            popc pop = new popc(dataSet);
+
+            if (pop.clusters.Count != numExpctedClusters)
+            {
+                throw new Exception("theory not confirmed");
+            }
         }
 
         private static void RunExample3()
@@ -18,7 +48,7 @@ namespace ContinuousPOPC
             int numExpctedClusters = 13;
             int numFeatures = 50;
             int samplesPerCluser = 300;
-            DataSet dataSet = new DataSet(numExpctedClusters, numFeatures, samplesPerCluser);
+            DataSet dataSet = new DataSet(numExpctedClusters, numFeatures, samplesPerCluser, 3);
             popc pop = new popc(dataSet);
 
             //creates 13 clusters as expected
