@@ -28,7 +28,10 @@ namespace POPC
                             {
                                 if (clusterNum == featureBelongsToCluster[i])
                                 {
-                                    dr.features[i] = true;
+                                    if (Program.r.NextDouble() < 0.8)
+                                    {
+                                        dr.features[i] = true;
+                                    }
                                 }
                             }
                             rows.Add(dr);
@@ -59,7 +62,10 @@ namespace POPC
                             {
                                 if (clusterNum == featureBelongsToCluster[i])
                                 {
-                                    dr.features[i] = true;
+                                    if (Program.r.NextDouble() < 0.8)
+                                    {
+                                        dr.features[i] = true;
+                                    }
                                 }
                                 if (featureBelongsToCluster[i] == -1)
                                 {
