@@ -22,6 +22,10 @@ namespace ContinuousPOPC
             popc pop = new popc(dataSet);
 
             //creates 13 clusters as expected
+            if(pop.clusters.Count != numExpctedClusters)
+            {
+                throw new Exception("theory not confirmed");
+            }
 
             // results close expected 13
             double vPOPC = popc.ComputeEval(pop.clusters, pop.countsAll);
