@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clusterGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="clusterGraph.Designer.cs">
+      <DependentUpon>clusterGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="clustering\cluster.cs" />
     <Compile Include="clustering\kmeans.cs" />
     <Compile Include="clustering\popc.cs" />
@@ -55,6 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="clusterGraph.resx">
+      <DependentUpon>clusterGraph.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

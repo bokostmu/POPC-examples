@@ -1,7 +1,8 @@
 ﻿using System;
-using ContinuousPOPC.clustering;
+using POPC.clustering;
+using System.Collections.Generic;
 
-namespace ContinuousPOPC
+namespace POPC
 {
     class Program
     {
@@ -26,6 +27,8 @@ namespace ContinuousPOPC
             {
                 throw new Exception("theory not confirmed");
             }
+
+            DisplayClusters(pop.clusters);
         }
 
         private static void RunExample2()
@@ -40,24 +43,28 @@ namespace ContinuousPOPC
             {
                 throw new Exception("theory not confirmed");
             }
+
+            DisplayClusters(pop.clusters);
         }
 
         private static void RunExample3()
         {
             // scenario 3
-            int numExpctedClusters = 13;
-            int numFeatures = 50;
-            int samplesPerCluser = 300;
+            int numExpctedClusters = 7;
+            int numFeatures = 20;
+            int samplesPerCluser = 30;
             DataSet dataSet = new DataSet(numExpctedClusters, numFeatures, samplesPerCluser, 3);
             popc pop = new popc(dataSet);
 
-            //creates 13 clusters as expected
-            if(pop.clusters.Count != numExpctedClusters)
+            DisplayClusters(pop.clusters);
+
+            //creates 7 clusters as expected
+            if (pop.clusters.Count != numExpctedClusters)
             {
                 throw new Exception("theory not confirmed");
             }
 
-            // results close expected 13
+            // results close expected 7
             double vPOPC = popc.ComputeEval(pop.clusters, pop.countsAll);
 
             if (Math.Abs(vPOPC - numExpctedClusters) > 0.1)
@@ -67,6 +74,8 @@ namespace ContinuousPOPC
 
             // pretend we know correct number of clusters
             kmeans km = new kmeans(dataSet, pop.clusters.Count);
+
+            DisplayClusters(km.clusters);
             // even with knowledge of amount of correct clusters
             // we get score close to 0 due to k-means clusters
             // concentrates on noisy features and does not find
@@ -78,5 +87,34 @@ namespace ContinuousPOPC
                 throw new Exception("theory not confirmed");
             }
         }
+
+        static public void DisplayClusters(List<cluster> clusters)
+        {
+            clusterGraph cg = new clusterGraph();
+            int exampleNumber = 0;
+            for (int i = 0; i < clusters.Count; i++)
+            {
+                string clusterName = "cluster " + i.ToString();
+                cg.chart1.Series.Add(clusterName);
+                cg.chart1.Series[clusterName].ChartType 
+                    = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+                for(int j=0;j<clusters[i].rows.Count;j++)
+                {
+                    for(int k=0;k<clusters[i].rows[j].features.Length;k++)
+                    {
+                        if (clusters[i].rows[j].features[k])
+                        {
+                            cg.chart1.Series[clusterName].Points.AddXY(k + 1, exampleNumber);
+                        }
+                    }
+                    exampleNumber++;
+                }
+            }
+            cg.chart1.ChartAreas[0].AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+            cg.chart1.ChartAreas[0].AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
+
+            cg.ShowDialog();
+        }
+
     }
 }

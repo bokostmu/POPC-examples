@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ContinuousPOPC
+namespace POPC
 {
     public class DataSet
     {

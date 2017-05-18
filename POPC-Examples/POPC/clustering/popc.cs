@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ContinuousPOPC.clustering
+namespace POPC.clustering
 {
     public class popc
     {
