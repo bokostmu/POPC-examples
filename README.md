@@ -1,4 +1,4 @@
-# POPC-examples (publication)
+# POPC-examples
 Example 1 (clustered by POPC):
 ![Example 1](ex_01.png)
 Example 2 (clustered by POPC):
