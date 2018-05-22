@@ -8,4 +8,4 @@ Example 3 (clustered by POPC):
 Example 3 (clustered by k-means):
 ![Example 3 kmeans](ex_03kmeans.png)
 Reference:
-* P. Taraba: [Powered Outer Probabilistic Clustering](http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp394-398.pdf), Proceedings of the World Congress on Engineering and Computer Science, IAENG, October 2017
+* P. Taraba: [Powered Outer Probabilistic Clustering](http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp394-398.pdf), Proceedings of the World Congress on Engineering and Computer Science, IAENG, October 2017 [[best paper award](http://www.iaeng.org/WCECS2017/awards.html)]
